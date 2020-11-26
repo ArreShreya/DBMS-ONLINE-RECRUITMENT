@@ -1,9 +1,11 @@
-// import React from "react";
+import React, {Fragment} from "react";
 
-// const UpdateProfile = () => {
-//     return(
+const UpdateProfile = () => {
+    return(
+        <Fragment>
+            <h1>Update Profile</h1>
+        </Fragment>
+    );
+}
 
-//     );
-// }
-
-// export default UpdateProfile;
+export default UpdateProfile;

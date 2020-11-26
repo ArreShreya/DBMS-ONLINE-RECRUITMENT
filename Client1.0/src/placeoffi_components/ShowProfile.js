@@ -1,17 +1,19 @@
 import React, {Fragment, useEffect, useState} from "react"
+import Avatar from '@material-ui/core/Avatar';
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
-import StudentLogin from "../StudentLogin"
 
-const ListProfile = () => {
+const ShowProfile = () => {
 
     const [profiles, setProfiles] = useState([])
 
-    var student_id = sessionStorage.getItem("studentID");
+    var placement_id = sessionStorage.getItem("PlacementID");
+    var photoURL = localStorage.getItem("profile_photo");
+    //console.log(photoURL);
 
     const getProfile = async() => {
         try {
             
-            const res = await fetch(`http://localhost:5000/student/temp/profile/${student_id}`)
+            const res = await fetch(`http://localhost:5000/placementoffice/temp/profile/${placement_id}`)
             const jsonData = await res.json();
 
             console.log(jsonData)
@@ -25,14 +27,17 @@ const ListProfile = () => {
 
     useEffect(() => {
         getProfile();
-    }, [])
+    },[])
 
     return(
         <Fragment>
             <br />
-            <h2 className="text-center"><strong>Student Profile : </strong></h2>
-            <br />
-
+            <h2 className="text-center"><strong>Placement Officer Profile : </strong></h2>
+        <Avatar alt = "NAME" src = {photoURL}  style={{
+                margin: "10px",
+                width: "60px",
+                height: "60px",
+              }} />
         <div className="container-fluid p-3 my-3 bg-dark text-white">
         <table class="table table-dark table-striped text-center">
             <thead>
@@ -50,7 +55,7 @@ const ListProfile = () => {
                         id
                     </td>
                     <td>
-                        {profile.stu_id}
+                        {profile.placement_id}
                     </td>
                 </tr> 
                 
@@ -62,7 +67,7 @@ const ListProfile = () => {
                     name
                 </td>
                 <td>
-                    {profile.name}
+                    { profile.name}
                 </td>
             </tr>
             ))}
@@ -82,54 +87,10 @@ const ListProfile = () => {
 {profiles.map(profile => (
                 <tr>
                 <td>
-                    CPI
+                    Designation
                 </td>
                 <td>
-                    {profile.cpi}
-                </td>
-            </tr>
-            ))}
-
-{profiles.map(profile => (
-                <tr>
-                <td>
-                    Gender
-                </td>
-                <td>
-                    {profile.gender}
-                </td>
-            </tr>
-            ))}
-
-{profiles.map(profile => (
-                <tr>
-                <td>
-                    Address
-                </td>
-                <td>
-                    {profile.address}
-                </td>
-            </tr>
-            ))}
-
-{profiles.map(profile => (
-                <tr>
-                <td>
-                    Email
-                </td>
-                <td>
-                    {profile.email}
-                </td>
-            </tr>
-            ))}
-
-{profiles.map(profile => (
-                <tr>
-                <td>
-                    Placed Status
-                </td>
-                <td>
-                    {profile.placed_stats}
+                    {profile.designation}
                 </td>
             </tr>
             ))}
@@ -138,10 +99,11 @@ const ListProfile = () => {
         </table>
 
         </div>
+
         <br />
 
         <div className="container text-center">
-            <Link to={"/studentlogin/students"}><button className="goback"><span>Go to Studnets Page</span></button></Link>
+            <Link to={"/placementofficelogin/placementoffice"}><button className="btn btn-info" >Go to Placement Office Page</button></Link>
         </div>
 
             <br />
@@ -152,4 +114,4 @@ const ListProfile = () => {
     );
 }
 
-export default ListProfile;
+export default ShowProfile;

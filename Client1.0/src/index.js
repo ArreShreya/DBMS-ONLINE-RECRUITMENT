@@ -6,15 +6,6 @@ import './index.css';
 import App from './App';
 //import main from './main'
 
-// ReactDOM.render((
-//   // <BrowserRouter>
-//   // </BrowserRouter>
-
-//   //<Router main={main} history={history} />
-
-//   ), document.getElementById('root')
-// );
-
 ReactDOM.render(
   <React.StrictMode>
     <App />

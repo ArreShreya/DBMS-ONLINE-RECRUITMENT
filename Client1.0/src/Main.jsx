@@ -5,20 +5,38 @@ import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } 
 
 const MainPage = () => {
     return(
-      
-          <div>
-            <h3>Welcome to react router tutorial</h3>
-            <small>Main Page</small>
-            <Link to="/students">
-                <button className="btn btn-success">Student</button>
-            </Link>
-            <Link to="/placementoffice">
-                <button className="btn btn-success">Placement Office</button>
-            </Link>
-            <Link to="/company">
-                <button className="btn btn-success">Company</button>
-            </Link>
-        </div>   
+        
+        <Fragment>
+            <br />
+            <h1 className="text-center">Main page</h1>
+            < br />
+            <p className="text-center"><strong>Choose a role : </strong></p>
+            <br />
+
+            <div className="container text-center">
+                <Link to="/studentlogin">
+                    <button className="btn btn-success">Student</button>
+                </Link>
+            </div>
+
+            < br/>
+
+            <div className="container text-center">
+                <Link to="/placementofficelogin">
+                    <button className="btn btn-success">Placement Office</button>
+                </Link>
+            </div>
+
+            <br />
+
+            <div className="container text-center">
+                <Link to="/company">
+                    <button className="btn btn-success">Company</button>
+                </Link>
+            </div>
+    
+        </Fragment> 
+
     );
 }
 

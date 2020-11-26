@@ -1,4 +1,6 @@
 import React, {Fragment, useState} from "react"
+import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import Swal from "sweetalert2"
 
 const InputProfile = () => {
 
@@ -9,19 +11,28 @@ const InputProfile = () => {
     const [gender, setGender] = useState("")
     const [address, setAddress] = useState("")
     const [email, setEmail] = useState("")
-    //const [phonenumber, setPhonenumber] = useState("")
     const [placedstatus, setPlacedstatus] = useState("")
     const [resumepath, setResumepath] = useState("")
+    const [phonenumber, setPhonenumber] = useState("")
 
     const onSubmitProfile = async e => {
+        
         e.preventDefault();
         try {
-            const body = {sid, password, name, cpi, gender, address, email, placedstatus, resumepath}
-            const res = await fetch("http://localhost:5000/student/temp/createprofile/:sid", {
+            const body = {sid, password, name, cpi, gender, address, email, placedstatus, resumepath, phonenumber}
+            const res = await fetch("http://localhost:5000/student/temp/createprofile/:sid", { 
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
             }) 
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your profile has been created!',
+                showConfirmButton: false,
+                timer: 1500
+            })
 
             console.log(res)
             //window.location = "/";
@@ -34,11 +45,11 @@ const InputProfile = () => {
         <Fragment>
             <h1 className="text-center mt-5" >Create Profile</h1>
             
-        <div>
+        <div className="container">
             <form action="/action_page.php"  class="needs-validation" novalidate onSubmit={onSubmitProfile}>
                 <div class="form-group">
                     <label for="uid">User ID:</label>
-                    <input type="text" class="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} />
+                    <input type="text" class="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} required />
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
@@ -91,7 +102,12 @@ const InputProfile = () => {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-
+                <div class="form-group">
+                    <label for="upno">Phone Number:</label>
+                    <input type="text" class="form-control" id="upno" placeholder="Enter email ID" name="upno" required value = {phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
 
                 {/* <div class="form-group">
                     <label for="upno">Phone number:</label>
@@ -102,12 +118,21 @@ const InputProfile = () => {
                 
                 
                 <button className="btn btn-success">Submit</button>
+
             </form>
             </div>
 
+            
 
+                <br />
 
-{/* (function() {
+            <div className="container text-center">
+            <Link to={"/studentlogin"}><button className="goback"><span>Go to Login Page</span></button></Link>
+            </div>
+
+                <br />
+
+{/* {(function() {
   'use strict';
   window.addEventListener('load', function() {
     // Get the forms we want to add validation styles to
@@ -123,7 +148,7 @@ const InputProfile = () => {
       }, false);
     });
   }, false);
-})(); */}
+})();  */}
 
 
 
