@@ -271,31 +271,6 @@ app.get("/discussions", async(req, res) => {
     }
 })
 
-// Get company names for registration 
-app.get("/companyforregistration", async(req, res) => {
-    try {
-        //const alreadyRegistered = await pool.query("SELECT * FROM company_registration WHERE stu_id=$1", [data.sid])
-        const companyDetails = await pool.query("SELECT * FROM company")
-        res.json(companyDetails.rows)
-    } catch (err) {
-        console.error(err.message)
-    }
-})
-
-
-app.get("/alreadyregistered/:id", async(req, res) => {
-
-    const {id} = req.params;
-
-    try {
-        //const alreadyRegistered = await pool.query("SELECT * FROM company_registration WHERE stu_id=$1", [data.sid])
-        const alrcompanyDetails = await pool.query("SELECT * FROM company_registration WHERE stu_id=$1", [id])
-        res.json(alrcompanyDetails.rows)
-    } catch (err) {
-        console.error(err.message)
-    }
-})
-
 
 // update an element from profile
 app.put("/student/temp/updateprofile/:id", async(req, res) => {
