@@ -1,6 +1,10 @@
 import React, {Fragment, useState} from "react"
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 import Swal from "sweetalert2"
+import BackupIcon from '@material-ui/icons/Backup';
+import { Button,IconButton ,Avatar} from '@material-ui/core';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import axios from 'axios';
 
 const InputProfile = () => {
 
@@ -14,17 +18,54 @@ const InputProfile = () => {
     const [placedstatus, setPlacedstatus] = useState("")
     const [resumepath, setResumepath] = useState("")
     const [phonenumber, setPhonenumber] = useState("")
+    const [imageurl , setImageurl] = useState("");
+    const [filename,setFilename] = useState("");
+    const [resume,setResume] = useState(null);
+
+    const setResumeFile = async(e) =>{
+        // console.log("File",e.target.files[0]);
+        setFilename(e.target.files[0].name)
+        setResume(e.target.files[0]);
+        console.log("Step0");
+       
+    console.log("Step1",e.target.files[0].name);
+     }
 
     const onSubmitProfile = async e => {
         
         e.preventDefault();
         try {
-            const body = {sid, password, name, cpi, gender, address, email, placedstatus, resumepath, phonenumber}
-            const res = await fetch("http://localhost:5000/student/temp/createprofile/:sid", { 
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(body)
-            }) 
+            const body = {sid, password, name, cpi, gender, address, email, placedstatus,imageurl}
+            const head = {
+              headers:  {"Content-Type": "application/json"}};
+            const resSubmit = await axios.post(`http://localhost:5000/student/temp/createprofile/${sid}`, JSON.stringify(body),head)
+                //body: JSON.stringify(body.then(res => {
+
+               // return res.json()  
+           
+           console.log("Heelo",resSubmit.status);
+            if(resSubmit.status === 200) {
+                console.log("Step2");
+             
+                //console.log("Data-form",dataForm);
+               const dataForm = new FormData();
+               const config = {
+                 headers: {
+                     'content-type': 'multipart/form-data'
+                 }
+             };
+             dataForm.append('file', resume);  
+             console.log("Data-form",dataForm);
+
+                const resumeLogin = await axios.post(`http://localhost:5000/uploadfile/${sid}`,dataForm,config)
+               /* .then((response) => {
+                    console.log(resume);
+                    Swal.fire("File is successfully uploaded")
+                }).catch((error) => {
+            });*/
+    
+            console.log(resumeLogin);
+
 
             Swal.fire({
                 position: 'top-end',
@@ -34,21 +75,67 @@ const InputProfile = () => {
                 timer: 1500
             })
 
-            console.log(res)
+        
+        } else {
+            Swal.fire("Sorry!", "Incorrect credentials", "error")
+
+        }
             //window.location = "/";
-        } catch (err) {
+     } catch (err) {
             console.error(err.message)
         }
     }
+
+
+
+    const setProfilePhoto = (e) =>{
+        if(e.target.files[0]){
+            var reader = new FileReader();
+            reader.addEventListener('load',()=>{
+               // localStorage.setItem('profile_photo',reader.result);
+                setImageurl(reader.result)
+            });
+            reader.readAsDataURL(e.target.files[0]);
+        
+
+        }
+       /* else{
+        setImageurl('/static/images/avatar/1.jpg')
+        }*/
+    }
+    
 
     return(
         <Fragment>
             <h1 className="text-center mt-5" >Create Profile</h1>
             
         <div className="container">
+        <div className = "Profile_Photo" style = {{display : "flex",flexDirection : 'column-reverse' ,flex :"1" ,float: "right",marginBottom : "40px",alignItems :"center"}}>
+            <div className = "photo_title" > 
+
+            <Button variant="contained" classname = "fileInput" component="label" color="primary" startIcon = {<AddAPhotoIcon/>} > Add Profile Photo                    <input
+                    accept="image/*"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange = {setProfilePhoto}/>
+
+                    </Button>
+                </div>
+           <label for = "Avatar">
+            <Avatar 
+                alt = "USER"
+                src={imageurl} 
+                style={{
+                    width: "80px",
+                    height: "80px",
+                }} 
+                />
+            </label>
+            </div>
+           
             <form action="/action_page.php"  class="needs-validation" novalidate onSubmit={onSubmitProfile}>
                 <div class="form-group">
-                    <label for="uid">User ID:</label>
+                    <label for="uid" style = {{marginTop : "140px" }}>User ID:</label>
                     <input type="text" class="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} required />
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -96,12 +183,7 @@ const InputProfile = () => {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-                <div class="form-group">
-                    <label for="urept">Resume path:</label>
-                    <input type="text" class="form-control" id="urept" placeholder="Enter email ID" name="urept" required value = {resumepath} onChange={e => setResumepath(e.target.value)}/>
-                    <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
-                </div>
+       
                 <div class="form-group">
                     <label for="upno">Phone Number:</label>
                     <input type="text" class="form-control" id="upno" placeholder="Enter email ID" name="upno" required value = {phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
@@ -115,7 +197,20 @@ const InputProfile = () => {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div> */}
+               
+                <br/>
                 
+                <div className = "upload" style = {{display : "flex"}}>
+                    <Button variant="contained" classname = "fileInput" component="label" color="primary" startIcon = {<BackupIcon/>} > Upload File
+                    <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange = {setResumeFile}/>
+
+                    </Button>
+                    <h4> {filename} </h4>
+
+                </div>
                 
                 <button className="btn btn-success">Submit</button>
 
