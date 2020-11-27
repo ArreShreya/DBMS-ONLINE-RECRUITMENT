@@ -1,9 +1,7 @@
 import React,{Fragment,useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import axios from 'axios';
-import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
-import Swal from "sweetalert2"
+import { Button } from '@material-ui/core';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
 function InputProfile_po() {
     const [sid, setSid] = useState("")
@@ -11,15 +9,12 @@ function InputProfile_po() {
     const [name, setName] = useState("")
     const [designation, setDesignation] = useState("")
     const [imageurl , setImageurl] = useState("");
-    const [resume,setResume] = useState("");
-    const [filename,setFilename] = useState("");
-
+    
     const setProfilePhoto = (e) =>{
         if(e.target.files[0]){
             var reader = new FileReader();
             reader.addEventListener('load',()=>{
-                localStorage.setItem('profile_photo',reader.result);
-                        //setImageurl(URL.createObjectURL(e.target.files[0]))
+               // localStorage.setItem('profile_photo',reader.result);
                 setImageurl(reader.result)
             });
             reader.readAsDataURL(e.target.files[0]);
@@ -28,65 +23,21 @@ function InputProfile_po() {
         }
         else{
         setImageurl('/static/images/avatar/1.jpg')
+
         }
     }
 
-    const setResumeFile = async(e) =>{
-        setFilename(e.target.files[0].name)
-        console.log("File",e.target.files[0]);
-        const dataForm = new FormData();
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        };
-        dataForm.append('file', e.target.files[0]);  
-        axios.post("http://localhost:5000/test",dataForm,config)
-            .then((response) => {
-
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'The file is successfully uploaded!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-
-            }).catch((error) => {
-        });
-          
-        /*   const re =   await fetch ('http://localhost:5000/test', {
-                method:"POST",
-                headers : {'content-type': 'multipart/form-data'}   ,
-                dataForm
-    })
-            .then(res => {
-                console.log("response",res);
-            })
-            .catch(err => console.log(err));   */   
     
-        
-    }
     const onSubmitProfile = async (e)=>{
 
         try{
             e.preventDefault();
-            const body = {sid,password,name,designation};
-            const reqProfile = await fetch("http://localhost:5000/temp/placementoffice/createprofile/:sid",{
+            const body = {sid,password,name,designation,imageurl};
+            const reqProfile = await fetch(`http://localhost:5000/temp/placementoffice/createprofile/${sid}`,{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
             })
-
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your profile has been created!',
-                showConfirmButton: false,
-                timer: 1500
-            })
-
-            console.log(reqProfile)
         } 
         catch (err) {
             console.error(err.message)
@@ -99,25 +50,33 @@ function InputProfile_po() {
         <Fragment>
         <h1 className="text-center mt-5" >Create Profile</h1>
             
-        <div className="container">
-        <input accept="image/*"  id="profile_photo" type="file" onChange = {setProfilePhoto}/>
-        <label htmlFor="contained-button-file">
-        <IconButton>
-        <Avatar 
-            alt = "USER"
-            src={imageurl} 
-            style={{
-                margin: "10px",
-                width: "60px",
-                height: "60px",
-              }} 
-            />
-        </IconButton>
-        </label>
+        <div className = "container">
+        <div className = "Profile_Photo" style = {{display : "flex",flexDirection : 'column-reverse' ,flex :"1" ,float: "right",marginBottom : "40px",alignItems :"center"}}>
+            <div className = "photo_title" > 
 
-            <form action="/action_page.php"  class="needs-validation" enctype="multipart/form-data"  onSubmit={onSubmitProfile}>
+            <Button variant="contained" classname = "fileInput" component="label" color="primary" startIcon = {<AddAPhotoIcon/>} > Add Profile Photo                    <input
+                    accept="image/*"
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange = {setProfilePhoto}/>
+
+                    </Button>
+                </div>
+           <label for = "Avatar">
+            <Avatar 
+                alt = "USER"
+                src={imageurl} 
+                style={{
+                    width: "80px",
+                    height: "80px",
+                }} 
+                />
+            </label>
+            </div>
+            <form action="/action_page.php"  class="needs-validation" novalidate onSubmit={onSubmitProfile}>
+
                 <div class="form-group">
-                    <label for="uid">User ID:</label>
+                <label for="uid" style = {{marginTop : "140px" }}>User ID:</label>
                     <input type="text" class="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} />
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -142,20 +101,15 @@ function InputProfile_po() {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-                <input   id="profile_photo" type="file" name = "resume" onChange = {setResumeFile}/>
-               <br />
-               <br />
+             
+             <br/>
+              <br/>
+                
+
+               
                 <button className="btn btn-success">Submit</button>
             </form>
         </div>
-
-        <br />
-
-            <div className="container text-center">
-            <Link to={"/placementofficelogin"}><button className="btn btn-info" >Go to Login Page</button></Link>
-            </div>
-
-                <br />
         </Fragment>
 
     )

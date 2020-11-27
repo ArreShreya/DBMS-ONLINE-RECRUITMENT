@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react"
-import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import ShowPDF from "./ShowPDF";
 
 function ShowAllStudents() {
     
@@ -27,11 +27,9 @@ function ShowAllStudents() {
     
         return(
             <Fragment>
-                <br />
                 <h2 className="text-center"><strong> List of Students Registered : </strong></h2>
-                <br/>
     
-            <div className="container-fluid p-3 my-3 bg-dark text-white">
+            <div className="container">
             <table class="table table-dark table-striped text-center">
                 <thead>
                 <tr>
@@ -39,7 +37,9 @@ function ShowAllStudents() {
                     <th>Name</th>
                     <th>CPI</th>
                     <th>EMAIL</th>
-                    <th>Placed_Status</th>                    
+                    <th>Placed_Status</th>  
+                    <th>Resume</th>  
+      
                 </tr>
                 </thead>
                 <br />
@@ -72,7 +72,9 @@ function ShowAllStudents() {
                     <td>
                         {student.placed_stats}
                     </td>
-                    
+                     <td>
+                        {<ShowPDF key = {student.stu_id} id = {student.stu_id}/>}
+                    </td> 
                 </tr>
 
                 ))
@@ -110,14 +112,6 @@ function ShowAllStudents() {
             </table>
     
             </div>
-
-            <br />
-
-        <div className="container text-center">
-            <Link to={"/placementofficelogin/placementoffice"}><button className="btn btn-info" >Go to Placement Office Page</button></Link>
-        </div>
-
-            <br />
             </Fragment>
             
             

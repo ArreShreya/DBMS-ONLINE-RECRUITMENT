@@ -1,5 +1,4 @@
 import React, {Fragment, useEffect, useState} from "react"
-import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 
 function ShowCompany() {
     
@@ -27,11 +26,9 @@ function ShowCompany() {
     
         return(
             <Fragment>
-                <br />
                 <h2 className="text-center"><strong> List of Companies Registered : </strong></h2>
-                <br />
-
-            <div className="container-fluid p-3 my-3 bg-dark text-white">
+    
+            <div className="container">
             <table class="table table-dark table-striped text-center">
                 <thead>
                 <tr>
@@ -114,13 +111,6 @@ function ShowCompany() {
             </table>
     
             </div>
-            <br />
-
-        <div className="container text-center">
-            <Link to={"/placementofficelogin/placementoffice"}><button className="btn btn-info" >Go to Placement Office Page</button></Link>
-        </div>
-
-            <br />
             </Fragment>
             
         );      

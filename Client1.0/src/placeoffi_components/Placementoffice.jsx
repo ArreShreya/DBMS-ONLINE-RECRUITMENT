@@ -4,49 +4,34 @@ import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } 
 
 
 const PlacementofficePage = ({match}) => {
-    
+    <Switch>
+         <Route path={`${match.path}/createprofile`}  component={InputProfile_po} />
+    </Switch>
     return(
 
-        <div className = "container">
-            <br />
-            <h1 className="text-center"><strong>Placement Office Profile : </strong></h1>
-            <br />
-            <br />
-            <div className="container text-center">
+        <div className = "PlacementofficePage">
+            <div className="crpr mt-10">
+            <Link to={`${match.path}/createprofile`}><button className="btn btn-success">Create Profile</button></Link>
+            </div>
+            
+            <div>
             <Link to={`${match.path}/showprofile`}><button className="btn btn-success">Show Profile</button></Link>
             </div>
 
-            <br />
+            <div>
+            <Link to={`${match.path}/updateteprofile`}><button className="btn btn-success">Update Profile</button></Link>
+            </div>
 
-            <div className="container text-center">
+            <div>
             <Link to={`${match.path}/show-all-students`}><button className="btn btn-success">Show all Students</button></Link>
             </div>
 
-            <br />
-
-            <div className="container text-center">
+            <div>
             <Link to={`${match.path}/show-all-company-students`}><button className="btn btn-success">Show Company Registered Students</button></Link>
             </div>
 
-            <br />
-
-            <div className="container text-center">
+            <div>
             <Link to={`${match.path}/show-companies`}><button className="btn btn-success">Show Companies</button></Link>
-            </div>
-            <br />
-
-            <div className="container text-center">
-            <Link to={`${match.path}/feedback`}><button className="btn btn-success">Feedback</button></Link>
-            </div>
-            <br />
-
-            <div className="container text-center">
-            <Link to={`${match.path}/getpdfs`}><button className="btn btn-success">Students' Resume</button></Link>
-            </div>
-            <br />
-
-            <div className="container text-center">
-            <Link to={"/placementofficelogin"}><button className="btn btn-primary">LOG OUT</button></Link>
             </div>
         </div>
     );
