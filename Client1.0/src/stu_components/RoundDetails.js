@@ -1,5 +1,6 @@
 import React, {useState, useEffect, Fragment} from "react"
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import "./ExtraOne.css"
 
 const RoundDetails = () => {
  
@@ -27,16 +28,18 @@ const RoundDetails = () => {
 
     return(
         <Fragment>
+            <div id="list">
         <br />
-            <h2 className="text-center"><strong>Round Details : </strong></h2>
+        <div className="container text-center">
+        <h1 class="comp-title" ><strong>Round Details: </strong></h1>
+        </div>
         <br />
 
-        <div className="container-fluid p-3 my-3 bg-dark text-white">
-        <table class="table table-dark table-striped text-center">
-            <thead>
+        <div className="container">
+        <table class="table table-bordered table-white">
+            <thead class="thead-dark">
             <tr>
                 <th>Company id</th>
-                <th>Company name</th>
                 <th>Round 1</th>
                 <th>Round 2</th>
                 <th>Round 3</th> 
@@ -45,22 +48,10 @@ const RoundDetails = () => {
             <br />
             <tbody>
 
-            {/* {rounddetails.map(bleh => (
-                <tr key={rounddetails.company_id}>
-                    <td>
-                        {rounddetails.company_id}
-                    </td>
-                </tr> 
-                
-            ))} */}
-
                 {rounddetails.map(roundd => (
                 <tr key={roundd.company_id}>
                     <td>
                         {roundd.company_id}
-                    </td>
-                    <td>
-                        {roundd.company_name}
                     </td>
                     <td>
                         {roundd.round_1}
@@ -85,6 +76,7 @@ const RoundDetails = () => {
         </div>
 
             <br />
+            </div>
         </Fragment>
     );
 }

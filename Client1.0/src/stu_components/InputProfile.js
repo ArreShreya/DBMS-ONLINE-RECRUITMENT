@@ -1,6 +1,7 @@
 import React, {Fragment, useState} from "react"
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 import Swal from "sweetalert2"
+import "./ExtraOne.css"
 import BackupIcon from '@material-ui/icons/Backup';
 import { Button,IconButton ,Avatar} from '@material-ui/core';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
@@ -16,11 +17,12 @@ const InputProfile = () => {
     const [address, setAddress] = useState("")
     const [email, setEmail] = useState("")
     const [placedstatus, setPlacedstatus] = useState("")
-    const [resumepath, setResumepath] = useState("")
+    //const [resumepath, setResumepath] = useState("")
     const [phonenumber, setPhonenumber] = useState("")
     const [imageurl , setImageurl] = useState("");
     const [filename,setFilename] = useState("");
     const [resume,setResume] = useState(null);
+
 
     const setResumeFile = async(e) =>{
         // console.log("File",e.target.files[0]);
@@ -35,7 +37,7 @@ const InputProfile = () => {
         
         e.preventDefault();
         try {
-            const body = {sid, password, name, cpi, gender, address, email, placedstatus,imageurl}
+            const body = {sid, password, name, cpi, gender, address, email, placedstatus, phonenumber, imageurl}
             const head = {
               headers:  {"Content-Type": "application/json"}};
             const resSubmit = await axios.post(`http://localhost:5000/student/temp/createprofile/${sid}`, JSON.stringify(body),head)
@@ -87,7 +89,6 @@ const InputProfile = () => {
     }
 
 
-
     const setProfilePhoto = (e) =>{
         if(e.target.files[0]){
             var reader = new FileReader();
@@ -103,13 +104,18 @@ const InputProfile = () => {
         setImageurl('/static/images/avatar/1.jpg')
         }*/
     }
-    
 
     return(
         <Fragment>
-            <h1 className="text-center mt-5" >Create Profile</h1>
+            <div id="show">
+            <br />
+            <div className="container text-center">
+        <h1 class="comp-title" ><strong>Create Profile: </strong></h1>
+        </div>
+        <br/>
             
         <div className="container">
+
         <div className = "Profile_Photo" style = {{display : "flex",flexDirection : 'column-reverse' ,flex :"1" ,float: "right",marginBottom : "40px",alignItems :"center"}}>
             <div className = "photo_title" > 
 
@@ -132,9 +138,9 @@ const InputProfile = () => {
                 />
             </label>
             </div>
-           
+
             <form action="/action_page.php"  class="needs-validation" novalidate onSubmit={onSubmitProfile}>
-                <div class="form-group">
+            <div class="form-group">
                     <label for="uid" style = {{marginTop : "140px" }}>User ID:</label>
                     <input type="text" class="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} required />
                     <div class="valid-feedback">Valid.</div>
@@ -165,7 +171,7 @@ const InputProfile = () => {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group ">
                     <label for="add">Address:</label>
                     <input type="text" class="form-control" id="add" placeholder="Enter address" name="add" required value = {address} onChange={e => setAddress(e.target.value)}/>
                     <div class="valid-feedback">Valid.</div>
@@ -177,14 +183,14 @@ const InputProfile = () => {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group ">
                     <label for="uplst">Placed Status:</label>
                     <input type="text" class="form-control" id="uplst" placeholder="Enter placed status" name="uplst" required value = {placedstatus} onChange={e => setPlacedstatus(e.target.value)}/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-       
-                <div class="form-group">
+               
+                <div class="form-group ">
                     <label for="upno">Phone Number:</label>
                     <input type="text" class="form-control" id="upno" placeholder="Enter email ID" name="upno" required value = {phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
                     <div class="valid-feedback">Valid.</div>
@@ -197,9 +203,9 @@ const InputProfile = () => {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div> */}
-               
-                <br/>
                 
+                <br/>
+
                 <div className = "upload" style = {{display : "flex"}}>
                     <Button variant="contained" classname = "fileInput" component="label" color="primary" startIcon = {<BackupIcon/>} > Upload File
                     <input
@@ -211,8 +217,12 @@ const InputProfile = () => {
                     <h4> {filename} </h4>
 
                 </div>
+
+                <br/>
                 
+                <div >
                 <button className="btn btn-success">Submit</button>
+                </div>
 
             </form>
             </div>
@@ -227,27 +237,7 @@ const InputProfile = () => {
 
                 <br />
 
-{/* {(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Get the forms we want to add validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();  */}
-
-
-
-               
+        </div>   
             
         </Fragment>
     )

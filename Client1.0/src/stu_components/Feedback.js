@@ -1,6 +1,8 @@
 import React, {Fragment, useState, useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 import Swal from "sweetalert2"
+import "./ExtraOne.css"
+
 
 const Feedback = () => {
 
@@ -11,7 +13,7 @@ const Feedback = () => {
     e.preventDefault();
         try {
             const body = {name, feedback}
-            const res = await fetch("http://localhost:5000/feedbacks/:name", { 
+            const res = await fetch(`http://localhost:5000/feedbacks/${name}`, { 
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -32,30 +34,34 @@ const Feedback = () => {
 
     return(
         <Fragment>
+            <div id="feedbackid">
             <br />
-            <div className="container">
-            <h2 className="text-center mt-2"><strong>Feedback : </strong></h2>
-            </div>
+            <div className="container text-center">
+        <h1 class="comp-title" ><strong>Feedback: </strong></h1>
+        </div>
             <br />
 
             <div className="container">
             <form action="POST"  class="needs-validation" novalidate onSubmit={onSubmitFeedback}>
                 
-                <div class="form-group">
+                <div class="form-group text-left">
                     <label for="nam">Name:</label>
                     <input type="text" class="form-control" id="nam" placeholder="Enter Name" name="nam" required value = {name} onChange={e => setName(e.target.value)}/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group text-left">
                     <label for="feed">Discussion:</label>
                     <textarea class="form-control" rows="5" id="feed" placeholder="Enter Discussion" name="feed" required value={feedback} onChange={e => setFeedback(e.target.value)} ></textarea>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
                     <br />
-                <button className="btn btn-secondary">Submit</button>
+
+                <div className="text-left">
+                <button className="btn btn-outline-dark">Submit</button>
+                </div>
             </form>
             </div>
             <br />
@@ -65,7 +71,7 @@ const Feedback = () => {
         </div>
 
             <br />
-
+            </div>
         </Fragment>
     );
 }
