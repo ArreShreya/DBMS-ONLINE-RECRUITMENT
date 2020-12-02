@@ -1,7 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios';
+import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 import Button from '@material-ui/core/Button';
 import GetAppIcon from '@material-ui/icons/GetApp';
+
+
 function ShowPDF({id}) {
     const [url,setUrl] = useState("");
 
@@ -15,16 +18,8 @@ function ShowPDF({id}) {
       
                 const dataUrl = window.URL.createObjectURL(newBlob);
                 setUrl(dataUrl);
-                alert("The file is successfully uploaded");
+                //alert("The file is successfully uploaded");
             })
-
-        
-
-            
-           // const jsonData =  res.json();
-
-            //console.log(jsonData)
-
 
         } catch (err) {
             console.error(err.message)
@@ -37,10 +32,10 @@ function ShowPDF({id}) {
     }, [])
     return (
         <div>
-            <h2>GET PDFS</h2>
+            
             <div id = "divIdToPrint"></div>
             <Button href = {url} download = "Output.pdf" color = "primary" variant="contained" startIcon = {<GetAppIcon/>}>
-            Download PDF
+            Download Resume
             </Button>
         
            

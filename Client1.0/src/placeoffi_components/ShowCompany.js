@@ -1,4 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react"
+import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import "./ExtraOnePla.css"
 
 function ShowCompany() {
     
@@ -26,11 +28,14 @@ function ShowCompany() {
     
         return(
             <Fragment>
+                <div id="show">
+                <br />
                 <h2 className="text-center"><strong> List of Companies Registered : </strong></h2>
-    
+                <br />
+
             <div className="container">
-            <table class="table table-dark table-striped text-center">
-                <thead>
+            <table class="table table-bordered table-white">
+                <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -42,14 +47,6 @@ function ShowCompany() {
                 </thead>
                 <br />
                 <tbody>
-                {/*{students.map(student => (
-                    <tr key={student.stu_id}>
-                        <td>
-                            {student.stu_id}
-                        </td>
-                    </tr> 
-                    
-                ))} */}
     
                 {companies.map(company => (
                     <tr>
@@ -78,40 +75,21 @@ function ShowCompany() {
 
                 ))
             }
-            {/*
-                {students.map(student => (
-                    <tr>
-                    
-                    <td>
-                        {student.cpi}
-                    </td>
-                </tr>
-                ))}
-    
-    
-                {students.map(student => (
-                    <tr>
-                   
-                    <td>
-                        {student.email}
-                    </td>
-                    </tr>
-                ))}
-
-                {students.map(student => (
-                    <tr>
-                   
-                    <td>
-                    {student.placed_stats}
-                    </td>
-                    </tr>
-                ))}
-                */}
+            
                 </tbody>
             </table>
     
             </div>
-            </Fragment>
+            <br />
+
+        <div className="container text-center">
+            <Link to={"/placementofficelogin/placementoffice"}><button className="goback"><span>Go to Placement Office Page</span></button></Link>
+        </div>
+
+            <br />
+
+            </div>
+        </Fragment>
             
         );      
     

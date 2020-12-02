@@ -1,5 +1,10 @@
 import React,{Fragment,useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios';
+import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import Swal from "sweetalert2"
+import "./ExtraOnePla.css"
 import { Button } from '@material-ui/core';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
@@ -9,7 +14,7 @@ function InputProfile_po() {
     const [name, setName] = useState("")
     const [designation, setDesignation] = useState("")
     const [imageurl , setImageurl] = useState("");
-    
+
     const setProfilePhoto = (e) =>{
         if(e.target.files[0]){
             var reader = new FileReader();
@@ -27,7 +32,7 @@ function InputProfile_po() {
         }
     }
 
-    
+  
     const onSubmitProfile = async (e)=>{
 
         try{
@@ -38,6 +43,16 @@ function InputProfile_po() {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
             })
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your profile has been created!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+            //console.log(reqProfile)
         } 
         catch (err) {
             console.error(err.message)
@@ -48,9 +63,14 @@ function InputProfile_po() {
 
     return (
         <Fragment>
-        <h1 className="text-center mt-5" >Create Profile</h1>
+            <div id="show">
+                <br />
+            <div className="container text-center">
+        <h1 class="comp-title" ><strong>Create Profile: </strong></h1>
+        </div>
+        <br/>
             
-        <div className = "container">
+        <div className="container">
         <div className = "Profile_Photo" style = {{display : "flex",flexDirection : 'column-reverse' ,flex :"1" ,float: "right",marginBottom : "40px",alignItems :"center"}}>
             <div className = "photo_title" > 
 
@@ -73,10 +93,17 @@ function InputProfile_po() {
                 />
             </label>
             </div>
-            <form action="/action_page.php"  class="needs-validation" novalidate onSubmit={onSubmitProfile}>
 
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+
+            <form action="/action_page.php"  class="needs-validation" enctype="multipart/form-data"  onSubmit={onSubmitProfile}>
                 <div class="form-group">
-                <label for="uid" style = {{marginTop : "140px" }}>User ID:</label>
+                    <label for="uid">User ID:</label>
                     <input type="text" class="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} />
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -101,15 +128,21 @@ function InputProfile_po() {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
-             
-             <br/>
-              <br/>
-                
-
-               
+        
+               <br />
+               <br />
                 <button className="btn btn-success">Submit</button>
             </form>
         </div>
+
+        <br />
+
+            <div className="container text-center">
+            <Link to={"/placementofficelogin"}><button className="goback"><span>Go to Login Page</span></button></Link>
+            </div>
+
+                <br />
+                </div>
         </Fragment>
 
     )

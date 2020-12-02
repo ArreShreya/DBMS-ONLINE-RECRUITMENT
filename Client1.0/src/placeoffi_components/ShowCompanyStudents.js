@@ -1,4 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react"
+import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import "./ExtraOnePla.css"
 
 function ShowCompanyStudents() {
     const [results, setResults] = useState([])
@@ -25,29 +27,21 @@ function ShowCompanyStudents() {
 
     return(
         <Fragment>
+            <div id="show">
+            <br/>
             <h2 className="text-center"><strong> List of Students Registered in Companies : </strong></h2>
-
+            <br />
         <div className="container">
-        <table class="table table-dark table-striped text-center">
-            <thead>
+        <table class="table table-bordered table-white">
+            <thead class="thead-dark">
             <tr>
-                <th> STUDENT ID</th>
-                <th>STUDENT Name</th>
-                <th>COMPANY NAME</th>
-                <th> PLACED_STATUS</th>
-                <th> APPLY </th>
+                <th> Student ID</th>
+                <th>Student Name</th>
+                <th>Company Name</th>
             </tr>
             </thead>
             <br />
             <tbody>
-            {/*{students.map(student => (
-                <tr key={student.stu_id}>
-                    <td>
-                        {student.stu_id}
-                    </td>
-                </tr> 
-                
-            ))} */}
 
             {results.map(result => (
                 <tr>
@@ -58,52 +52,28 @@ function ShowCompanyStudents() {
                     {result.name}
                 </td>
                 <td>
-                    {result.company_name}
-                </td>
-                <td>
                     {result.placed_stats}
-                </td>
-                <td>
-                    {result.apply}
                 </td>
                 
             </tr>
 
             ))
         }
-        {/*
-            {students.map(student => (
-                <tr>
-                
-                <td>
-                    {student.cpi}
-                </td>
-            </tr>
-            ))}
-
-
-            {students.map(student => (
-                <tr>
-               
-                <td>
-                    {student.email}
-                </td>
-                </tr>
-            ))}
-
-            {students.map(student => (
-                <tr>
-               
-                <td>
-                {student.placed_stats}
-                </td>
-                </tr>
-            ))}
-            */}
+    
             </tbody>
         </table>
 
         </div>
+
+        <br />
+
+        <div className="container text-center">
+            <Link to={"/placementofficelogin/placementoffice"}><button className="goback"><span>Go to Placement Office Page</span></button></Link>
+        </div>
+
+            <br />
+
+            </div>
         </Fragment>
     );
 }

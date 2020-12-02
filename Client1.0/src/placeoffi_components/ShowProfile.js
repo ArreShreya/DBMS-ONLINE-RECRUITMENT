@@ -1,5 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react"
 import Avatar from '@material-ui/core/Avatar';
+import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import "./ExtraOnePla.css"
 
 
 const ShowProfile = () => {
@@ -8,14 +10,14 @@ const ShowProfile = () => {
     const [profilePhoto, setProfilePhoto] = useState("");
 
 
-    var placement_id = localStorage.getItem("placement_id");
+    var placement_id = localStorage.getItem("PlacementID");
     //var photoURL = localStorage.getItem("profile_photo");
     //console.log(photoURL);
 
     const getProfile = async() => {
         try {
             
-            const res = await fetch(`http://localhost:5000/placementoffice/temp/profile/${placement_id}`)
+            const res = await fetch(`http://localhost:5000/placementoffice/profile/${placement_id}`)
             const jsonData = await res.json();
 
             console.log(jsonData)
@@ -27,46 +29,60 @@ const ShowProfile = () => {
         }
     }
 
-    const getProfilePhoto = async() => {
-        try {
+    // const getProfilePhoto = async() => {
+    //     try {
             
-            const res = await fetch(`http://localhost:5000/placementoffice/temp/profile/photo/${placement_id}`)
-            const jsonData = await res.json();
+    //         const res = await fetch(`http://localhost:5000/placementoffice/temp/profile/photo/${placement_id}`)
+    //         const jsonData = await res.json();
 
-             //console.log(jsonData.data)
+    //          //console.log(jsonData.data)
 
-             setProfilePhoto(jsonData.profile_photo)
+    //          setProfilePhoto(jsonData.profile_photo)
 
             
 
-        } catch (err) {
-            console.error(err.message)
-        }
-    }
+    //     } catch (err) {
+    //         console.error(err.message)
+    //     }
+    // }
 
     /*useEffect(() => {
     })*/
 
     useEffect(() => {
         getProfile();
-        getProfilePhoto();
+        // getProfilePhoto();
     },[])
-
-
-
-    
 
     return(
         <Fragment>
-            <h2 className="text-center"><strong>USER Profile : </strong></h2>
-            <Avatar alt = "USER"  src = {profilePhoto} style={{
-                margin: "50px",
-                width: "100px",
-                height: "100px",
-              }} />
+        
+         <div id="list">
+            <br />
+            <div className="container text-center">
+        <h1 class="comp-title" ><strong>Placement Officer Profile: </strong></h1>
+        </div>
+           <br />
+
+
+           {profiles.map(profile => (
+               <Avatar alt = "USER" src = {profile.profile_photo} style={{
+                   margin: "50px",
+                   width: "100px",
+                   height: "100px",
+                   display : "flex",
+                   flexDirection : 'column-reverse' ,
+                   flex :"1" ,
+                   float: "right",
+                   marginBottom : "40px",
+                   marginRight: "70px",
+                   alignItems :"center"
+               }} />
+           ))}
+
         <div className="container">
-        <table class="table table-dark table-striped text-center">
-            <thead>
+        <table class="table table-bordered table-white">
+            <thead class="thead-dark">
             <tr>
                 <th>Field</th>
                 <th>information</th>
@@ -75,11 +91,11 @@ const ShowProfile = () => {
             </thead>
             <br />
             <tbody>
-                {console.log('name',profiles[0])}
+            {/* {console.log('name',profiles[0])} */}
             {profiles.map(profile => (
                 <tr key={profile.stu_id}>
                     <td>
-                        id
+                        <strong>id</strong>
                     </td>
                     <td>
                         {profile.placement_id}
@@ -91,20 +107,18 @@ const ShowProfile = () => {
             {profiles.map(profile => (
                 <tr>
                 <td>
-                    name
+                    <strong>name</strong>
                 </td>
                 <td>
                     { profile.name}
                 </td>
             </tr>
-            
             ))}
-            
 
 {profiles.map(profile => (
                 <tr>
                 <td>
-                    password
+                    <strong>password</strong>
                 </td>
                 <td>
                     {profile.password}
@@ -116,7 +130,7 @@ const ShowProfile = () => {
 {profiles.map(profile => (
                 <tr>
                 <td>
-                    Designation
+                    <strong>Designation</strong>
                 </td>
                 <td>
                     {profile.designation}
@@ -125,9 +139,20 @@ const ShowProfile = () => {
             ))}
 
             </tbody>
-</table> 
+        </table>
 
-</div>
+        </div>
+
+        <br />
+
+        <div className="container text-center">
+            <Link to={"/placementofficelogin/placementoffice"}><button className="goback"><span>Go to Placement Office Page</span></button></Link>
+        </div>
+
+            <br />
+
+
+            </div>
         </Fragment>
         
         

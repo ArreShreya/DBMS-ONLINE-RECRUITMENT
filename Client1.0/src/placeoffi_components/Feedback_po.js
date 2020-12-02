@@ -1,6 +1,7 @@
 import React, {Fragment, useState, useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 import Swal from "sweetalert2"
+import "./ExtraOnePla.css"
 
 const Feedback = () => {
 
@@ -11,7 +12,7 @@ const Feedback = () => {
     e.preventDefault();
         try {
             const body = {name, feedback}
-            const res = await fetch("http://localhost:5000/feedbacks/:name", { 
+            const res = await fetch(`http://localhost:5000/feedbacks/${name}`, { 
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -32,6 +33,9 @@ const Feedback = () => {
 
     return(
         <Fragment>
+
+            <div id="feedbackid">
+
             <br />
             <div className="container">
             <h2 className="text-center mt-2"><strong>Feedback : </strong></h2>
@@ -55,17 +59,19 @@ const Feedback = () => {
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
                     <br />
-                <button className="btn btn-secondary">Submit</button>
+                <button className="btn btn-outline-dark">Submit</button>
             </form>
             </div>
             <br />
             <br />
             <div className="container text-center">
-            <Link to={"/placementofficelogin/placementoffice"}><button className="btn btn-info" >Go to Placement Ofice Page</button></Link>
+            <Link to={"/placementofficelogin/placementoffice"}><button className="goback"><span>Go to Placement Office Page</span></button></Link>
         </div>
 
             <br />
 
+
+            </div>
         </Fragment>
     );
 }
