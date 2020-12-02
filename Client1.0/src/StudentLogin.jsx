@@ -2,20 +2,37 @@ import React,{Fragment, useState } from "react";
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 import Swal from "sweetalert2"
 //import Button from '@material-ui/core/Button';
-import "./ExtraOne.css"
+// import "./ExtraOne.css"
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import "./LoginPage.css"
 
 
 const StudentLogin = (props) => {
     const [sid, setSid] = useState("")
     const [password, setPassword] = useState("")
-    const [disable, setDisable] = useState("false")
+   // const [disable, setDisable] = useState("false")
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+
+    const onMouseEnterFun = () => {
+      setDropdownOpen(true);
+    }
+  
+    const onMouseLeaveFun = () => {
+      setDropdownOpen(false);
+    }  
+
+    const togglee = () => {
+      setDropdownOpen(prevState => ({
+        dropdownOpen: !prevState.dropdownOpen
+      }));
+    }
 
 
     const onSubmitForm = async e => {
       e.preventDefault();
       try {
           const body = {sid, password}
-          const submitLogin = await fetch("http://localhost:5000/login", {
+          const submitLogin = await fetch("http://localhost:5000/student/loginpage", {
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: JSON.stringify(body) 
@@ -33,7 +50,7 @@ const StudentLogin = (props) => {
             props.history.push("/studentlogin/students")
 
             var student_id = submitLogin.stu_id;
-            sessionStorage.setItem("studentID", student_id);
+            localStorage.setItem("studentID", student_id);
           }
           else{
             Swal.fire("Sorry!", "Incorrect credentials", "error")
@@ -51,21 +68,37 @@ const StudentLogin = (props) => {
 
     <Fragment>
 
-      {/* <h1>Status: {props.loggedInStatus}</h1> */}
-      <head>
-    
-      </head>
-      <br />
-      <h1 className="text-center">Student Login Page</h1>
+<div id="loginpage">
+
+      <div class="title">
+      <h1 class="hone"><strong>Student Login Page</strong></h1>
+
+      <div class="second">
+
+      {/* <Dropdown  onMouseOver={onMouseEnterFun} onMouseLeave={onMouseLeaveFun} isOpen={dropdownOpen} toggle={togglee}>
+        <DropdownToggle caret>
+          Contact us &nbsp;
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem disabled>Shreya : 6355141681</DropdownItem>
+          <DropdownItem disabled>Action</DropdownItem>
+          <DropdownItem disabled>Action</DropdownItem>
+          <DropdownItem disabled>Action</DropdownItem>
+        </DropdownMenu>
+      </Dropdown> */}
+      </div>
+      </div>
       <br />
         
-        <div className="text-center">
-          <h2>Login : </h2>
-          <small>Enter The appropriate credentials</small>
+        <br/>
+        
+        <div className="container text-center">
+          <h2 class="login-hone">Login : </h2>
+          <small class="login-hone">Enter The appropriate credentials</small>
         </div>
      <div className="container">
      <form action="POST" onSubmit={onSubmitForm}>
-            <div>
+            <div >
               <label for="uid">User ID:</label>
               <input type="text" className="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} />
             </div>
@@ -75,64 +108,22 @@ const StudentLogin = (props) => {
           </div>
           <br />
           {/* <button className="btn btn-primary">LOGIN</button> */}
+
+         <div>
           <button className="login"><span>LOGIN</span></button>
+          </div>
+          
          
         </form>
     </div>
 
-  <br />
-    {/* <div class="container"> */}
-   
-      {/* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Open modal
-      </button> */}
-
-{/*     
-      <div class="modal" id="myModal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          
-
-            {/* <div class="modal-header">
-              <h4 class="modal-title">Modal Heading</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div> */}
-            
-          
-            {/* <div class="modal-body">
-              {
-                false ? "Correct Login" : "Sorry!"
-              }
-            </div>
-            
-       
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-            
-          </div>
-        </div>
-      </div>  */}
-  
-      {/* </div> */}
-
-
-    
+  <br /> 
     <br />
-    {/* <div className="container">
-    <Link to={`${props.match.path}/students`}><button className="btn btn-success">Go to Student Profile</button></Link>
-    </div>
-    <br /> */}
-
-
-    <div className="text-center">
-          <h2>Sign Up : </h2>
-        </div>
 
     <br />
 
     <div className="container text-center">
-            <Link to={`${props.match.path}/createprofile`}><button className="button">Create Profile</button></Link>
+            <Link to={`${props.match.path}/createprofile`}><button className="btn btn-outline-secondary"> &nbsp; Sign Up &nbsp;</button></Link>
     </div>
     <br/>
     <br />
@@ -140,14 +131,9 @@ const StudentLogin = (props) => {
             <Link to={"/"}><button className="goback"><span>Go to Main page</span></button></Link>
     </div>
     <br />
-
-    {
-      disable ? null : <h1>Bello</h1>
-      // <Link to={`${match.path}/students`}><button className="btn btn-success" disabled={disable} >Go to Student Profile</button></Link>
-    }
     
     
-    
+    </div>
     
 </Fragment>
 )

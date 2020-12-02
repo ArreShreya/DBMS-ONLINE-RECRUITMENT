@@ -1,7 +1,7 @@
 import React,{Fragment, useState } from "react";
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
 import Swal from "sweetalert2"
-import "./ExtraOne.css"
+import "./LoginPage.css"
 
 function PlacementOfficeLogin(props) {
     
@@ -33,7 +33,7 @@ function PlacementOfficeLogin(props) {
               }
     
               var placement_id = submitLogin.placement_id;
-              sessionStorage.setItem("PlacementID", placement_id);
+              localStorage.setItem("PlacementID", placement_id);
     
               console.log(submitLogin.placement_id)
     
@@ -45,55 +45,50 @@ function PlacementOfficeLogin(props) {
         
       return (
         <Fragment>
+          <div id="loginpage">
+          <div class="title">
+              <h1 class="hone"><strong>Placement Office Login Page</strong></h1>
+         </div>
+          <br/>
           <br />
-          <h1 className="text-center">PlacementOfficer Login Page</h1>
-            <br />
-
-            <div className="text-center">
-          <h2>Login : </h2>
-          <small>Enter The appropriate credentials</small>
-        </div>
+          <div className="container text-center">
+              <h2 class="login-hone">Login : </h2>
+              <small class="login-hone">Enter The appropriate credentials</small>
+          </div>
+          
          <div className="container">
          <form action="POST" onSubmit={onSubmitForm}>
                 <div>
                   <label for="uid">User ID:</label>
                   <input type="text" className="form-control" id="uid" placeholder="Enter username" name="uid" required value = {sid} onChange={e => setSid(e.target.value)} />
                 </div>
-                <div>
+                <div >
                 <label for="pwd">Password:</label>
                 <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pswd" required value = {password} onChange={e => setPassword(e.target.value)}/>
               </div>
               <br />
-              <button className="login"><span>Login</span></button>
+              <div>
+              <button className="login"><span>LOGIN</span></button>
+              </div>
             </form>
         </div>
 
-        <br />
-        {/* <div className="container">
-        <Link to={`${match.path}/placementoffice`}><button className="btn btn-success">Go to Placementoffice Profile</button></Link>
-        </div> */}
-        <br />
-    
-    
-        <div className="text-center">
-              <h2>Sign Up : </h2>
-            </div>
-    
-        <br />
-    
-        <div className="container text-center">
-                <Link to={`${props.match.path}/createprofile`}><button className="btn btn-success">Create Profile</button></Link>
-        </div>
-    
-        <br/>
+        <br /> 
+    <br />
+
+    <br />
+
+    <div className="container text-center">
+            <Link to={`${props.match.path}/createprofile`}><button className="btn btn-outline-secondary"> &nbsp; Sign Up &nbsp;</button></Link>
+    </div>
+    <br/>
     <br />
      <div className="container text-center">
-            <Link to={"/"}><button className="btn btn-info">Go to Main page</button></Link>
+            <Link to={"/"}><button className="goback"><span>Go to Main page</span></button></Link>
     </div>
     <br />
-    
-        
-        
+
+        </div>
         
     </Fragment>
     )
