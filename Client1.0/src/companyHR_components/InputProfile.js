@@ -1,5 +1,7 @@
 import React , {Fragment,useState} from 'react';
 import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import Swal from "sweetalert2"
+import "./ExtraOneCom.css"
 
 const InputProfilecom =  () => {
     const[cid,setCid] =useState("")
@@ -20,6 +22,16 @@ const InputProfilecom =  () => {
                 headers:{"content-Type":"application/json"},
                 body:JSON.stringify(body)
             })
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your profile has been created!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+
             console.log(res)
         } catch (err) {
             console.log(err.message)
@@ -28,7 +40,16 @@ const InputProfilecom =  () => {
 
     return(
         <Fragment>
-            <h1 className="text-center mt-5">Create Profile</h1>
+
+            <div id="show">
+
+            <br />
+            <div className="container text-center">
+        <h1 class="comp-title" ><strong>Create Profile: </strong></h1>
+        </div>
+        <br/>
+
+
             <div className="container">
                  <form action="/action_page.php"  class="needs-validation" novalidate onSubmit={onSubmitProfile}>
                 <div className="form-group">
@@ -73,8 +94,19 @@ const InputProfilecom =  () => {
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
+                <br/>
                 <button className="btn btn-success">Submit</button>
             </form>
+            </div>
+
+            <br />
+
+            <div className="container text-center">
+            <Link to={"/companylogin"}><button className="goback"><span>Go to Login Page</span></button></Link>
+            </div>
+
+                <br />
+
             </div>
         </Fragment>
     )

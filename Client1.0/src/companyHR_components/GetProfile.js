@@ -1,4 +1,6 @@
 import React , {Fragment, useEffect, useState} from 'react'
+import {BrowserRouter as Router, Route, Switch, Link, Redirect, useRouteMatch } from "react-router-dom"
+import "./ExtraOneCom.css"
 
 const GetProfile = () => {
     
@@ -27,10 +29,19 @@ const GetProfile = () => {
     // company/login/:id
     return (
         <Fragment>
-             <h2 className="text-center"><strong>Company Profile : </strong></h2>
+
+            <div id="feedbackid">
+
+             <br />
+            <div className="container text-center">
+        <h1 class="comp-title" ><strong>Company Profile: </strong></h1>
+        </div>
+           <br />
+
+
             <div className="container">
-                <table class="table table-dark table-striped text-center">
-                    <thead>
+                <table class="table table-bordered table-white">
+                    <thead class="thead-dark">
                         <tr>
                             <th>Field</th>
                             <th>information</th>
@@ -101,6 +112,17 @@ const GetProfile = () => {
                         
                     </tbody>
                 </table>
+            </div>
+
+            <br />
+
+<div className="container text-center">
+    <Link to={"/companylogin/company"}><button className="goback"><span>Go to Company Page</span></button></Link>
+</div>
+
+    <br />
+
+
             </div>
         </Fragment>
     )
